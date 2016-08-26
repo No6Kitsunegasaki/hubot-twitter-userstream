@@ -17,6 +17,8 @@ class Twitter extends Hubot.Adapter
   reply: (envelope, strings...) ->
     strings.forEach (string) =>
       if envelope.room != 'TwitterDirectMessage'
+        if typeof envelope.message.message != "undefined"
+          envelope.message.id = envelope.message.message.id
         @_postTweet "@#{envelope.user.name} #{string}", envelope.message.id
       else
         @_postDirectMessage string, envelope.user.id
